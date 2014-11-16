@@ -1,0 +1,190 @@
+<fieldset class="title-container">
+<legend style="font: bold 26px 'arial';margin-bottom:10px"><i class="custom-icon-lock" style="margin-top:-3px"></i>Role</legend>
+<input type="hidden" id="module" value="<?=$data['permission']['module_id']?>"/>
+<input type="hidden" id="data" />
+<?=action_button($data['permission']);?>
+<input type="button" id="deleteme" value="deleteme" />
+<div id="xrole">
+<table class="table table-hover table-custom display" style="font: 12px 'Arial';" id="role">
+		<thead>
+			<tr>
+			  <th valign="center" class="text-align-center forprint" style='width:20px'><input id="check-all" type="checkbox" class="css-checkbox" name="check-all"><label for="check-all" class='css-label'></th>
+			  <th>Role Name</th>
+			  <th class="acl">Activated</th>
+			  <th class="width110 forprint">Action</th>
+			</tr>
+        </thead>
+		<tbody>
+			
+		<?php
+		$ctr = 1;
+		foreach($userRole as $k){
+			$delete 	= ($k->role_id !=2) ? "<a href='#stack1' class='delete actions' data-toggle='modal' data-index='".($ctr)."' id='role_id_".genKey($k->role_id)."'><i class='icon-remove-circle'></i> Delete</a>": '- -';
+			$edit 		= ($k->role_id!=2) ? "<a href='".base_url()."xadmin/role/edit/".genKey($k->role_id)."' class='actions'><i class='icon-pencil'></i> Edit</a>" : "- - ";
+			$checkbox 		= ($k->role_id!=2) ? "<input type='checkbox' class='check css-checkbox' name='_".($ctr)."' id='_".($k->role_id)."' value='".genericKey($k->role_id)."'><label for='_".($ctr)."' class='css-label'></label>" : "<div style='height:14px;width:14px;border:1px solid #ddd'></div>";
+			$actions 	=  '';
+			if($data['permission']['_update']==1){
+			$actions .= $edit;
+			}
+			if($data['permission']['_delete']==1){
+			$actions .= " ".$delete;
+			}
+			$activated 	= ($k->status==1) ? "icon-ok" : "icon-remove";
+		echo "<tr id='delete_".($k->role_id)."'><td style='width:20px;vertical-align:middle' class='forprint'>".$checkbox."</td><td class='text-align'><strong>".$k->role."</strong><br /><i>".rtrim($child[$k->role_id],',')."</i></td><td class='align-center'><i class='".$activated."'></i></td><td class=\"forprint\">".$actions."</td></tr>";
+		$ctr++;
+		}
+			
+			
+			?>
+			
+		
+			
+		</tbody>
+	</table>
+	</div>
+</fieldset>
+       <script type="text/javascript" charset="utf-8" src="<?=base_url('assets/ver3.0/js/')?>jquery.dataTables.js" ></script>
+ <script type="text/javascript" charset="utf-8" src="<?=base_url('assets/ver3.0/js/')?>dataTables.bootstrap.js" ></script>
+        <script type="text/javascript" charset="utf-8" src="<?=base_url('assets/ver3.0/js/')?>ZeroClipboard.js" ></script>
+        <script type="text/javascript" charset="utf-8" src="<?=base_url('assets/ver3.0/js/')?>TableTools.js" ></script>
+        <script type="text/javascript" charset="utf-8" src="<?=base_url('assets/ver3.0/js/')?>jquery.PrintArea.js" ></script>
+<style type="text/css">
+.row{margin-left: 0px;margin-right: 0px}
+</style>
+<script type="text/javascript">
+$('#role').dataTable( {
+        "bProcessing": true,
+        "sPaginationType": "full_numbers",
+        "sAjaxDataProp": "",
+        "aoColumns": [
+            { "mData": "STREET", "sClass": "center" },
+            { "mData": "HOUSE #", "sClass": "center" },
+            { "mData": "YEAR", "sClass": "center" },
+            { "mData": "DIA# (in#)", "sClass": "center" },
+            { "mData": "PIPE MATERIAL", "sClass": "center" },
+        ],
+  
+        "sDom": 'T<"clear">lfrtip',
+        "oTableTools": {
+            "sSwfPath": "media/swf/copy_csv_xls_pdf.swf",
+            "sRowSelect": "multi",
+        "aButtons": [ "select_all", "select_none",
+                {
+                    "sExtends": "collection",
+                    "sButtonText": "More",
+                    "aButtons": [
+                        {"sExtends": "copy", "bSelectedOnly": true},
+                        {"sExtends": "csv", "bSelectedOnly": true},
+                        {"sExtends": "xls", "bSelectedOnly": true},
+                        {"sExtends": "pdf", "bSelectedOnly": true},
+                        "print"
+                    ]
+                }
+            ]
+        }
+    } );
+</script>
+
+<?php
+
+/*
+var editor;
+var forexport;
+$(document).ready(function(){
+
+		 var options = { container: $('#role'), showIndeterminate: true };
+		 $('#check-all').checkAll(options);
+			 $.extend( true, $.fn.DataTable.TableTools.classes, {
+				"container": "btn-group",
+				"buttons": {
+					"normal": "btn btn-default btn-sm",
+					"disabled": "btn disabled"
+				},
+				"collection": {
+					"container": "DTTT_dropdown dropdown-menu",
+					"buttons": {
+						"normal": "",
+						"disabled": "disabled"
+					}
+				}
+			} );
+
+			// Have the collection use a bootstrap compatible dropdown
+			$.extend( true, $.fn.DataTable.TableTools.DEFAULTS.oTags, {
+				"collection": {
+					"container": "ul",
+					"button": "li",
+					"liner": "a"
+				}
+			} );
+
+		$('#role tr').click( function() {
+	        $(this).toggleClass('row_selected');
+	    } );
+
+	     $('#deleteme').click( function() {
+		        var anSelected = fnGetSelected( oTable );
+		        	alert(anSelected);
+		        		alert(anSelected);
+		        if ( anSelected.length > 0 ) {
+    					oTable.fnDeleteRow( anSelected ); 
+		        }
+		    } );
+			//"sDom": "<'row pull-left'<'span6'T>><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>><'clear'>",		 	"aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
+		var oTable =  $('#role').dataTable({
+		 	"iDisplayLength": 10,
+		 	"sDom": "<'row pull-left'T><'row pull-right forprint'f><'clr'>t<'row'><'pull-left forprint'i><'row pull-right forprint'p><'clr'>",
+			"oTableTools": {
+				"aButtons": [
+					
+				]
+			}
+
+		});
+
+
+		
+			
+
+			$('#ToolTables_role_0').click(function(){
+					var x = tests($(this).text());
+					alert(xy);
+			});
+
+		 });
+
+
+$(document).on("click", ".deleteall", function (event) {
+     event.preventDefault();
+		    var searchIDs = $("input.check:checkbox:checked").map(function(){
+		        return this.value;
+		    }).toArray();
+		    forexport = searchIDs;
+		});
+  
+function export_data(){
+	var xy = [];
+		 	$("input[type='checkbox'].check:checked").each( 
+			    function() { 
+			       // Your code goes here...
+			       return xy.push($(this).val());
+			    } 
+			);
+	
+}
+
+function fnGetSelected( oTableLocal ){
+     var aReturn = new Array();
+    var aTrs = oTableLocal.fnGetNodes();
+    for ( var i=0 ; i<aTrs.length ; i++ )
+    {
+        // removed $() because this is already DOM element.
+        if ( aTrs[i].hasClass('row_selected') ) 
+        {
+            aReturn.push( aTrs[i] );
+        }
+    }
+    return aReturn;
+}
+
+*/?>

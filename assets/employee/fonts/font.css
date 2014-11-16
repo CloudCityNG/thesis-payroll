@@ -1,0 +1,14 @@
+@font-face {
+	font-family: 'Ubuntu-B';
+	src: url('Ubuntu-B.ttf'); /* IE9 Compat Modes */
+	src: url('Ubuntu-B.ttf?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	     url('Ubuntu-B.ttf') format('woff'), /* Modern Browsers */
+	     url('Ubuntu-B.ttf')  format('truetype'), /* Safari, Android, iOS */
+	}
+@font-face {
+	font-family: 'Ubuntu';
+	src: url('Ubuntu-R.ttf'); /* IE9 Compat Modes */
+	src: url('Ubuntu-R.ttf?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	     url('Ubuntu-R.ttf') format('woff'), /* Modern Browsers */
+	     url('Ubuntu-R.ttf')  format('truetype'), /* Safari, Android, iOS */
+	}

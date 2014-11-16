@@ -1,0 +1,14 @@
+@font-face {
+	font-family: 'Ubuntu-B';
+	src: url('Ubuntu-B.ttf'); /* IE9 Compat Modes */
+	src: url('Ubuntu-B.ttf?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	     url('Ubuntu-B.ttf') format('woff'), /* Modern Browsers */
+	     url('Ubuntu-B.ttf')  format('truetype'), /* Safari, Android, iOS */
+	}
+@font-face {
+	font-family: 'Oxygen';
+	src: url('Oxygen.otf'); /* IE9 Compat Modes */
+	src: url('Oxygen.otf?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	     url('Oxygen.otf') format('woff'), /* Modern Browsers */
+	     url('Oxygen.otf')  format('truetype'), /* Safari, Android, iOS */
+	}
